@@ -51,7 +51,7 @@ export default function SingUp() {
                 alert(err.message);
             })
             .then(res => {
-                Navigate('/')
+                navigate('/')
             }, 1000);
 
     }
@@ -63,30 +63,34 @@ export default function SingUp() {
             <HomeTitle>My Wallet</HomeTitle>
             <InputLogin
                 type='name'
+                name='username'
                 placeholder="Nome"
                 onChange={handleForm}
-                value={username}
+                value={form.username}
                 disabled={disable}
             />
 
             <InputLogin
                 type='email'
+                name='email'
                 placeholder="E-mail"
                 onChange={handleForm}
-                value={email}
+                value={form.email}
                 disabled={disable}
             />
 
             <InputLogin
                 type='password'
+                name='password'
                 placeholder="Senha"
                 onChange={handleForm}
-                value={password}
+                value={form.password}
                 disabled={disable}
             />
 
             <InputLogin
                 type='password'
+                name='secondPassword'
                 placeholder="Confirme a senha"
                 onChange={handleForm}
                 value={secondPassword}

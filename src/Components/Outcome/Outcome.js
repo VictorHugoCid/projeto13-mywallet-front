@@ -1,25 +1,62 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import GlobalContext from "../../Context/globalContext";
+import dayjs from "dayjs";
 
-export default function Outcome(){
+export default function Outcome() {
 
+    const navigate = useNavigate();
+    const { array, setArray } = useContext(GlobalContext);
 
+    const [form, setForm] = useState({
+        value: '',
+        description: '',
+        day: dayjs(new Date()).format('DD/MM'),
+        type: 'outcome',
+    });
 
-    return(
-        
+    function handleForm(e) {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value,
+        })
+
+    }
+
+    function sendForm() {
+        setArray([...array, form])
+
+        navigate('/home')
+    }
+
+    return (
+
         <Wrapper>
             <HomeTitle>Nova saída</HomeTitle>
-            <InputValue placeholder="Valor"></InputValue>
-            <InputDescription placeholder="Descrição"></InputDescription>
-            <ConfirmButton>Salvar saída</ConfirmButton>
+            <InputValue
+                type='value'
+                name='value'
+                placeholder="Valor"
+                onChange={handleForm}
+                value={form.value}
+            />
+            <InputDescription
+                type='description'
+                name='description'
+                placeholder="Descrição"
+                onChange={handleForm}
+                value={form.description}
+            />
+            <ConfirmButton onClick={sendForm}>Salvar saída</ConfirmButton>
         </Wrapper>
-       
-    
+
+
     );
-    
-    }
-    
-    
+
+}
+
+
 const Wrapper = styled.div`
 width: 100vw;
 height: 100vh;
@@ -95,4 +132,4 @@ cursor: pointer;
 
 
 `;
-    
+

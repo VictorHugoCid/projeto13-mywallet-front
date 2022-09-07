@@ -1,32 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import GlobalContext from "../../Context/globalContext";
 
 export default function Home() {
 
-    const { username, day, description, type, value } = useContext(GlobalContext)
-    
-    const array = [
-        {
-            day: '30/11',
-            description: 'almoço mãe',
-            type: 'outcome',
-            value: "40.00",
+    const navigate = useNavigate();
 
-        }, {
-            day: '05/12',
-            description: 'salário',
-            type: 'income',
-            value: '4000.00',
+    const { username, array } = useContext(GlobalContext)
 
-        }, {
-            day: '06/12',
-            description: 'provi',
-            type: 'outcome',
-            value: '800.00',
-
+    let sum=0;
+    for (let i = 0; i < array.length; i++) {
+        if(array[i].type === 'income'){
+            sum += Number(array[i].value)
         }
-    ]
+        if(array[i].type === 'outcome'){
+            sum = sum - Number(array[i].value)
+        }
+    }
 
     return (
 
@@ -40,24 +31,26 @@ export default function Home() {
 
             <Container >
                 {array.map(value => (
-                    <MiniWrapper>
+                    <MiniWrapper >
                         <Day>{value.day}</Day>
                         <Description>{value.description}</Description>
-                        <Value type = {value.type} >{value.value}</Value>
-                        
+                        <Value type={value.type} >{Number(value.value).toLocaleString('pt-BR')}</Value>
                     </MiniWrapper>
-
-                ))}
                 
+                ))}
+            <Balance sum={sum}>
+                <h1>Saldo</h1>
+                <h2>{sum.toLocaleString('pt-BR')}</h2>
+            </Balance>
 
             </Container>
 
             <ButtonWrapper>
-                <AddButton>
+                <AddButton onClick={() => navigate('/income')}>
                     <ion-icon name="add-circle-outline"></ion-icon>
                     <p>Nova entrada</p>
                 </AddButton>
-                <AddButton>
+                <AddButton onClick={() => navigate('/outcome')}>
                     <ion-icon name="remove-circle-outline"></ion-icon>
                     <p>Nova saída</p>
                 </AddButton>
@@ -112,8 +105,33 @@ color: #868686;
 
 display: flex;
 
+position: relative;
+
 
 `;
+
+const Balance = styled.div`
+position: absolute;
+bottom: 10px;
+left: 10px;
+right: 10px;
+
+display: flex;
+justify-content: space-between;
+
+h1{
+    font-size: 20px;
+    color:#000;
+    font-weight: 900;
+}
+
+h2{
+    font-size: 20px;
+    font-weight: 900;
+    color:${props => props.sum >=0 ? '#03AC00' : '#C70000'};
+
+}
+`
 
 const ButtonWrapper = styled.div`
 width: 87vw;
@@ -198,14 +216,14 @@ justify-content: flex-end;
 
 /* color: #03AC00; */
     /* color: #C70000; */
-color: ${ props => {
-if(props.type === 'income'){
-    return '#C70000'
-}
-if(props.type === 'outcome'){
-    return'#03AC00'
-}
-}}
+color: ${props => {
+        if (props.type === 'income') {
+            return '#03AC00'
+        }
+        if (props.type === 'outcome') {
+            return '#C70000'
+        }
+    }}
 `
 
 

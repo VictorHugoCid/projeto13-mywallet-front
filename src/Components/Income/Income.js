@@ -1,14 +1,32 @@
-import React from "react";
 import styled from "styled-components";
 import GlobalContext from "../../Context/globalContext";
-import { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 
 export default function Income() {
+    
     const navigate = useNavigate();
-    const { setDay, setDescription, setType, setValue } = useContext(GlobalContext);
+    const { array, setArray } = useContext(GlobalContext);
+
+    const [form, setForm] = useState({
+        value:'',
+        description:'',
+        day: dayjs(new Date()).format('DD/MM'),
+        type: 'income',
+    });
+
+    function handleForm(e){
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value,
+        })
+
+    }
 
     function sendForm(){
+        setArray([...array,form])
+
         navigate('/home')
     }
 
@@ -16,8 +34,20 @@ export default function Income() {
 
         <Wrapper>
             <HomeTitle>Nova entrada</HomeTitle>
-            <InputValue placeholder="Valor"></InputValue>
-            <InputDescription placeholder="Descrição"></InputDescription>
+            <InputValue 
+            type='value' 
+            name='value'
+            placeholder="Valor"
+            onChange={handleForm}
+            value={form.value}
+            />
+            <InputDescription 
+            type='description' 
+            name='description'
+            placeholder="Descrição"
+            onChange={handleForm}
+            value={form.description}
+            />
             <ConfirmButton onClick={sendForm}>
                 Salvar entrada
             </ConfirmButton>
