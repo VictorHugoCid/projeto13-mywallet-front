@@ -6,7 +6,7 @@ const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit";
 //Posts
 
 
-function singUp(body) {
+function signUp(body) {
     return axios.post(`${URL}/auth/sign-up`, body)
 }
 
@@ -47,7 +47,7 @@ function deleteHabit(id, getConfig) {
 }
 
 export {
-    singUp,
+    signUp,
     logIn,
     createHabit,
     checkHabit,

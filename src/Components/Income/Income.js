@@ -1,9 +1,16 @@
 import React from "react";
 import styled from "styled-components";
+import GlobalContext from "../../Context/globalContext";
+import { useContext } from 'react'
+import { useNavigate } from "react-router-dom";
 
 export default function Income() {
+    const navigate = useNavigate();
+    const { setDay, setDescription, setType, setValue } = useContext(GlobalContext);
 
-
+    function sendForm(){
+        navigate('/home')
+    }
 
     return (
 
@@ -11,7 +18,9 @@ export default function Income() {
             <HomeTitle>Nova entrada</HomeTitle>
             <InputValue placeholder="Valor"></InputValue>
             <InputDescription placeholder="Descrição"></InputDescription>
-            <ConfirmButton>Salvar entrada</ConfirmButton>
+            <ConfirmButton onClick={sendForm}>
+                Salvar entrada
+            </ConfirmButton>
         </Wrapper>
 
 

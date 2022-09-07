@@ -1,42 +1,55 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import GlobalContext from "../../Context/globalContext";
 
 export default function Home() {
+
+    const { username, day, description, type, value } = useContext(GlobalContext)
+    
+    const array = [
+        {
+            day: '30/11',
+            description: 'almoço mãe',
+            type: 'outcome',
+            value: "40.00",
+
+        }, {
+            day: '05/12',
+            description: 'salário',
+            type: 'income',
+            value: '4000.00',
+
+        }, {
+            day: '06/12',
+            description: 'provi',
+            type: 'outcome',
+            value: '800.00',
+
+        }
+    ]
 
     return (
 
         <Wrapper>
 
             <HomeTitle>
-                <p>Olá, Fulano</p>
+                <p>Olá, {username}</p>
                 <ion-icon name="log-out-outline"></ion-icon>
             </HomeTitle>
 
 
             <Container >
-                <MiniWrapper>
-                    <Time>30/11</Time>
-                    <Description>Almoço mãe</Description>
-                    <Value>39000.90</Value>
-                </MiniWrapper>
+                {array.map(value => (
+                    <MiniWrapper>
+                        <Day>{value.day}</Day>
+                        <Description>{value.description}</Description>
+                        <Value type = {value.type} >{value.value}</Value>
+                        
+                    </MiniWrapper>
 
-                <MiniWrapper>
-                    <Time>30/11</Time>
-                    <Description>Almoço mãe</Description>
-                    <Value>3900.90</Value>
-                </MiniWrapper>
+                ))}
+                
 
-                <MiniWrapper>
-                    <Time>30/11</Time>
-                    <Description>Almoço mãe</Description>
-                    <Value>390.90</Value>
-                </MiniWrapper>
-
-                <MiniWrapper>
-                    <Time>30/11</Time>
-                    <Description>Almoço mãe</Description>
-                    <Value>390.90</Value>
-                </MiniWrapper>
             </Container>
 
             <ButtonWrapper>
@@ -45,7 +58,7 @@ export default function Home() {
                     <p>Nova entrada</p>
                 </AddButton>
                 <AddButton>
-                    <ion-icon name="add-circle-outline"></ion-icon>
+                    <ion-icon name="remove-circle-outline"></ion-icon>
                     <p>Nova saída</p>
                 </AddButton>
             </ButtonWrapper>
@@ -159,9 +172,10 @@ font-size: 16px;
 font-weight: 900;
 color: #fff;
 
+
 `;
 
-const Time = styled.div`
+const Day = styled.div`
 width: 50px;
 margin-left: 8px;
 
@@ -182,8 +196,16 @@ margin-left: 8px;
 display: flex;
 justify-content: flex-end;
 
-color: #03AC00;
+/* color: #03AC00; */
     /* color: #C70000; */
+color: ${ props => {
+if(props.type === 'income'){
+    return '#C70000'
+}
+if(props.type === 'outcome'){
+    return'#03AC00'
+}
+}}
 `
 
 
