@@ -25,7 +25,12 @@ export default function Outcome() {
     }
 
     function sendForm() {
-        setArray([...array, form])
+        setArray([...array, {
+            day: dayjs(new Date()).format('DD/MM'),
+            value: Number(form.value),
+            description: form.description,
+            type: 'outcome',
+        }])
 
         navigate('/home')
     }
@@ -35,20 +40,22 @@ export default function Outcome() {
         <Wrapper>
             <HomeTitle>Nova saída</HomeTitle>
             <InputValue
-                type='value'
+                type='number'
                 name='value'
                 placeholder="Valor"
                 onChange={handleForm}
                 value={form.value}
             />
             <InputDescription
-                type='description'
+                type='text'
                 name='description'
                 placeholder="Descrição"
                 onChange={handleForm}
                 value={form.description}
             />
-            <ConfirmButton onClick={sendForm}>Salvar saída</ConfirmButton>
+            <ConfirmButton onClick={sendForm}>
+                Salvar saída
+            </ConfirmButton>
         </Wrapper>
 
 
@@ -111,6 +118,8 @@ color: #000;
 margin-left: 10px;
 
 }
+
+-moz-appearance: textfield;
 
 `;
 

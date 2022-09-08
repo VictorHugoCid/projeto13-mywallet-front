@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import GlobalContext from "../../Context/globalContext";
+import BalanceItem from '../BalanceItem/BalanceItem';
 
 export default function Home() {
 
@@ -9,12 +10,12 @@ export default function Home() {
 
     const { username, array } = useContext(GlobalContext)
 
-    let sum=0;
+    let sum = 0;
     for (let i = 0; i < array.length; i++) {
-        if(array[i].type === 'income'){
+        if (array[i].type === 'income') {
             sum += Number(array[i].value)
         }
-        if(array[i].type === 'outcome'){
+        if (array[i].type === 'outcome') {
             sum = sum - Number(array[i].value)
         }
     }
@@ -30,18 +31,14 @@ export default function Home() {
 
 
             <Container >
-                {array.map(value => (
-                    <MiniWrapper >
-                        <Day>{value.day}</Day>
-                        <Description>{value.description}</Description>
-                        <Value type={value.type} >{Number(value.value).toLocaleString('pt-BR')}</Value>
-                    </MiniWrapper>
-                
+                {array.map((value,index) => (
+                    <BalanceItem key={index} value={value}/>
                 ))}
-            <Balance sum={sum}>
-                <h1>Saldo</h1>
-                <h2>{sum.toLocaleString('pt-BR')}</h2>
-            </Balance>
+
+                <Balance sum={sum}>
+                    <h1>Saldo</h1>
+                    <h2>{sum.toLocaleString('pt-BR')}</h2>
+                </Balance>
 
             </Container>
 
@@ -128,7 +125,7 @@ h1{
 h2{
     font-size: 20px;
     font-weight: 900;
-    color:${props => props.sum >=0 ? '#03AC00' : '#C70000'};
+    color:${props => props.sum >= 0 ? '#03AC00' : '#C70000'};
 
 }
 `
@@ -189,8 +186,6 @@ padding: 10px;
 font-size: 16px;
 font-weight: 900;
 color: #fff;
-
-
 `;
 
 const Day = styled.div`

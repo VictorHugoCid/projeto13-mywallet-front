@@ -1,22 +1,22 @@
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import GlobalContext from "../../Context/globalContext";
-import React, { useContext, useState } from 'react'
-import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
-export default function Income() {
-    
+export default function Update_Outcome() {
+
     const navigate = useNavigate();
     const { array, setArray } = useContext(GlobalContext);
 
     const [form, setForm] = useState({
-        value:'',
-        description:'',
+        value: '',
+        description: '',
         day: dayjs(new Date()).format('DD/MM'),
-        type: 'income',
+        type: 'outcome',
     });
 
-    function handleForm(e){
+    function handleForm(e) {
         setForm({
             ...form,
             [e.target.name]: e.target.value,
@@ -24,12 +24,11 @@ export default function Income() {
 
     }
 
-    function sendForm(){
-        setArray([...array,{
-            day :dayjs(new Date()).format('DD/MM'),
+    function sendForm() {
+        setArray([...array, {
             value: Number(form.value),
             description: form.description,
-            type: 'income',
+            type: 'outcome',
         }])
 
         navigate('/home')
@@ -38,23 +37,23 @@ export default function Income() {
     return (
 
         <Wrapper>
-            <HomeTitle>Nova entrada</HomeTitle>
-            <InputValue 
-            type='number' 
-            name='value'
-            placeholder="Valor"
-            onChange={handleForm}
-            value={form.value}
+            <HomeTitle>Editar saída</HomeTitle>
+            <InputValue
+                type='number'
+                name='value'
+                placeholder="Valor"
+                onChange={handleForm}
+                value={form.value}
             />
-            <InputDescription 
-            type='text' 
-            name='description'
-            placeholder="Descrição"
-            onChange={handleForm}
-            value={form.description}
+            <InputDescription
+                type='text'
+                name='description'
+                placeholder="Descrição"
+                onChange={handleForm}
+                value={form.description}
             />
             <ConfirmButton onClick={sendForm}>
-                Salvar entrada
+                Atualizar saída
             </ConfirmButton>
         </Wrapper>
 
@@ -102,9 +101,6 @@ color: #000;
 margin-left: 10px;
 
 }
-
--moz-appearance: textfield;
-
 `;
 
 const InputDescription = styled.input`
@@ -121,6 +117,8 @@ color: #000;
 margin-left: 10px;
 
 }
+
+-moz-appearance: textfield;
 
 `;
 

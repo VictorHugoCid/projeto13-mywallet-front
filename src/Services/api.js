@@ -3,57 +3,48 @@ import axios from "axios";
 //  vai mudar pro localhost
 const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit";
 
-//Posts
 
 
+// Sign-Up--------------------------------
 function signUp(body) {
-    return axios.post(`${URL}/auth/sign-up`, body)
+    return axios.post(`${URL}/signUp`, body)
 }
 
 function logIn(body) {
-    return axios.post(`${URL}/auth/login`, body)
+    return axios.post(`${URL}/signIn`, body)
 }
 
-function createHabit(body, getConfig) {
-    return axios.post(`${URL}/habits`, body, getConfig)
+// Income--------------------------------
+function createIncome(body, getConfig) {
+    return axios.post(`${URL}/balance`, body, getConfig)
 }
 
-function checkHabit(id, getConfig) {
-    return axios.post(`${URL}/habits/${id}/check`,{}, getConfig)
+// Outcome--------------------------------
+function createOutcome(body, getConfig) {
+    return axios.post(`${URL}/balance`, body, getConfig)
 }
 
-function unCheckHabit(id, getConfig) {
-    return axios.post(`${URL}/habits/${id}/uncheck`,{}, getConfig)
+// Home--------------------------------
+
+function getBalance(getConfig) {
+    return axios.get(`${URL}/balance`, getConfig)
 }
 
-//Gets
+// Delete --------------------------------
 
-function getHabits(getConfig) {
-    return axios.get(`${URL}/habits`, getConfig)
-}
-
-function getTodayHabits(getConfig) {
-    return axios.get(`${URL}/habits/today`, getConfig)
-}
-
-function getHistoricHabits(getConfig) {
-    return axios.get(`${URL}/habits/history/daily`, getConfig)
-}
-
-//Delete
-
-function deleteHabit(id, getConfig) {
+function deleteRegister(id, getConfig) {
     return axios.delete(`${URL}/habits/${id}`,getConfig)
 }
+
+// Update-------------------------------
+
 
 export {
     signUp,
     logIn,
-    createHabit,
-    checkHabit,
-    unCheckHabit,
-    getHabits,
-    getTodayHabits,
-    getHistoricHabits,
-    deleteHabit
+    createIncome,
+    createOutcome,
+    getBalance,
+    deleteRegister,
 }
+
