@@ -10,14 +10,13 @@ export default function SingUp() {
     const navigate = useNavigate();
     const { username, setUsername } = useContext(GlobalContext);
 
-    const [password, setPassword] = useState('')
-    const [secondPassword, setSecondPassword] = useState('')
-    const [email, setEmail] = useState('')
-    const [disable, setdisable] = useState(false)
+    const [disable, setDisable] = useState(false)
+
     const [form, setForm] = useState({
         username: '',
         email: '',
         password: '',
+        secondPassword: '',
     })
 
     function handleForm(e) {
@@ -28,76 +27,92 @@ export default function SingUp() {
 
     }
     function verifyPassword() {
-        if (password === secondPassword) {
+        if (form.password === form.secondPassword) {
             return true
         }
     }
 
-    function sendForm() {
+    function sendForm(e) {
 
+        e.preventDefault();
+
+        if (!form.username || !form.email || !form.password || !form.secondPassword) {
+            return alert('Preencha todos os campos')
+        }
         if (!verifyPassword()) {
             alert('a senha não confere')
             return;
         }
 
         const body = {
-            username,
-            email,
-            password,
+            username: form.username,
+            email: form.email,
+            password: form.password,
         }
 
-        const promise = signUp(body)
-            .catch(err => {
-                alert(err.message);
-            })
-            .then(res => {
-                navigate('/')
-            }, 1000);
+        // const promise = signUp(body)
+        //     .catch(err => {
+        //         alert(err.message);
+        //     })
+        //     .then(res => {
+        //         navigate('/')
+        //     }, 1000);
 
     }
+
+
 
 
     return (
 
         <Wrapper>
             <HomeTitle>My Wallet</HomeTitle>
-            <InputLogin
-                type='name'
-                name='username'
-                placeholder="Nome"
-                onChange={handleForm}
-                value={form.username}
-                disabled={disable}
-            />
+            <FormWrapper onSubmit={sendForm}>
+                <InputLogin
+                    type='name'
+                    name='username'
+                    placeholder="Nome"
+                    onChange={handleForm}
+                    value={form.username}
+                    disabled={disable}
+                />
 
-            <InputLogin
-                type='email'
-                name='email'
-                placeholder="E-mail"
-                onChange={handleForm}
-                value={form.email}
-                disabled={disable}
-            />
+                <InputLogin
+                    type='email'
+                    name='email'
+                    placeholder="E-mail"
+                    onChange={handleForm}
+                    value={form.email}
+                    disabled={disable}
+                />
 
-            <InputLogin
-                type='password'
-                name='password'
-                placeholder="Senha"
-                onChange={handleForm}
-                value={form.password}
-                disabled={disable}
-            />
+                <InputLogin
+                    type='password'
+                    name='password'
+                    placeholder="Senha"
+                    onChange={handleForm}
+                    value={form.password}
+                    disabled={disable}
+                />
 
-            <InputLogin
-                type='password'
-                name='secondPassword'
-                placeholder="Confirme a senha"
-                onChange={handleForm}
-                value={secondPassword}
-                disabled={disable}
-            />
+                <InputLogin
+                    type='password'
+                    name='secondPassword'
+                    placeholder="Confirme a senha"
+                    onChange={handleForm}
+                    value={form.secondPassword}
+                    disabled={disable}
+                />
 
-            <ConfirmButton onClick={sendForm}>Cadastrar</ConfirmButton>
+                <ConfirmButton
+                    type='submit'
+                >
+                    Cadastrar
+                </ConfirmButton>
+            </FormWrapper>
+
+
+
             <MiniWrapper>
                 <Link to='/'>Já tem uma conta? Entre agora!</Link>
             </MiniWrapper>
@@ -130,8 +145,12 @@ color: #FFF;
 display:flex;
 justify-content: center;
 
+`
+const FormWrapper = styled.form`
+width: 87vw;
 
 `
+
 
 const InputLogin = styled.input`
 width: 87vw;
