@@ -2,13 +2,13 @@ import React, { useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import GlobalContext from "../../Context/globalContext";
-import {updateIncome} from "../../Services/api"
+import { updateRegister } from "../../Services/api"
 import getConfig from '../../Services/getConfig'
 
-export default function Update_Income({value}) {
+export default function Update_Income({ value }) {
 
     const navigate = useNavigate();
-    const { token, reRender, setReRender} = useContext(GlobalContext);
+    const { token, reRender, setReRender } = useContext(GlobalContext);
     const id = useParams()
 
     const [form, setForm] = useState({
@@ -30,17 +30,17 @@ export default function Update_Income({value}) {
             description: form.description,
         }
         console.log(body)
-        const promise = updateIncome(body,id.id, getConfig(token))
-        .catch((error) => {
-            console.log(error.message);
-            // alert(error);
-        })
-        .then(res => {
-            console.log(res.data);
+        const promise = updateRegister(body, id.id, getConfig(token))
+            .catch((error) => {
+                console.log(error.message);
+                // alert(error);
+            })
+            .then(res => {
+                console.log(res.data);
 
-            setReRender(!reRender)
-            navigate('/home')
-        })
+                setReRender(!reRender)
+                navigate('/home')
+            })
     }
 
     return (

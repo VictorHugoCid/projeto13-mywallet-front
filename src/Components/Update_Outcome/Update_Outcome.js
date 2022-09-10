@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import GlobalContext from "../../Context/globalContext";
-import { updateOutcome } from "../../Services/api"
+import { updateRegister } from "../../Services/api"
 import getConfig from '../../Services/getConfig'
 
 export default function Update_Outcome() {
@@ -30,7 +30,7 @@ export default function Update_Outcome() {
             description: form.description,
         }
         console.log(body)
-        const promise = updateOutcome(body, id.id, getConfig(token))
+        const promise = updateRegister(body, id.id, getConfig(token))
             .catch((error) => {
                 console.log(error.message);
                 // alert(error);

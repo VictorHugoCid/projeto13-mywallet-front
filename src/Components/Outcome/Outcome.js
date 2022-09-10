@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import GlobalContext from "../../Context/globalContext";
 import dayjs from "dayjs";
-import { createOutcome } from '../../Services/api'
+import { createRegister } from '../../Services/api'
 import getConfig from '../../Services/getConfig'
 
 export default function Outcome() {
@@ -32,7 +32,7 @@ export default function Outcome() {
             type: 'outcome',
         }
 
-        const promise = createOutcome(body, getConfig(token))
+        const promise = createRegister(body, getConfig(token))
             .catch((error) => {
                 console.log(error.message);
                 // alert('error');

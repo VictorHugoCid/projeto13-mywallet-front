@@ -12,16 +12,10 @@ function logIn(body) {
     return axios.post(`${URL}/signin`, body)
 }
 
-// Income--------------------------------
-function createIncome(body, getConfig) {
-    return axios.post(`${URL}/income`, body, getConfig)
+// createRegister
+function createRegister(body, getConfig) {
+    return axios.post(`${URL}/createRegister`, body, getConfig)
 }
-
-// Outcome--------------------------------
-function createOutcome(body, getConfig) {
-    return axios.post(`${URL}/outcome`, body, getConfig)
-}
-
 // Home--------------------------------
 function getBalance(getConfig) {
     return axios.get(`${URL}/home`, getConfig)
@@ -41,14 +35,18 @@ function updateOutcome(body,id, getConfig) {
     return axios.put(`${URL}/outcome-update/${id}`,body,  getConfig)
 }
 
+function updateRegister(body,id, getConfig) {
+    return axios.put(`${URL}/updateRegister/${id}`,body,  getConfig)
+}
+
 export {
     signUp,
     logIn,
-    createIncome,
-    createOutcome,
+    createRegister,
     getBalance,
     deleteRegister,
     updateIncome,
-    updateOutcome
+    updateOutcome,
+    updateRegister
 }
 

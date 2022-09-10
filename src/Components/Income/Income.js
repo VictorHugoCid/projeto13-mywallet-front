@@ -3,7 +3,7 @@ import GlobalContext from "../../Context/globalContext";
 import React, { useContext, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
-import { createIncome } from "../../Services/api";
+import { createRegister } from "../../Services/api";
 import getConfig from "../../Services/getConfig";
 
 export default function Income() {
@@ -33,7 +33,7 @@ export default function Income() {
             type: 'income',
         }
 
-        const promise = createIncome(body, getConfig(token))
+        const promise = createRegister(body, getConfig(token))
             .catch((error) => {
                 console.log(error.message);
                 // alert(error);
