@@ -33,7 +33,13 @@ function deleteRegister(id, getConfig) {
 }
 
 // Update-------------------------------
+function updateIncome(body,id, getConfig) {
+    return axios.put(`${URL}/income-update/${id}`,body,  getConfig)
+}
 
+function updateOutcome(body,id, getConfig) {
+    return axios.put(`${URL}/outcome-update/${id}`,body,  getConfig)
+}
 
 export {
     signUp,
@@ -42,5 +48,7 @@ export {
     createOutcome,
     getBalance,
     deleteRegister,
+    updateIncome,
+    updateOutcome
 }
 

@@ -7,16 +7,16 @@ import { createIncome } from "../../Services/api";
 import getConfig from "../../Services/getConfig";
 
 export default function Income() {
-    
+
     const navigate = useNavigate();
     const { reRender, setReRender, token } = useContext(GlobalContext);
 
     const [form, setForm] = useState({
-        value:'',
-        description:'',
+        value: '',
+        description: '',
     });
 
-    function handleForm(e){
+    function handleForm(e) {
         setForm({
             ...form,
             [e.target.name]: e.target.value,
@@ -24,25 +24,26 @@ export default function Income() {
 
     }
 
-    function sendForm(){
+    function sendForm(e) {
+        e.preventDefault();
         const body = {
             day: dayjs(new Date()).format('DD/MM'),
             value: Number(form.value),
             description: form.description,
             type: 'income',
         }
-        
-        const promise = createIncome(body, getConfig(token))
-        .catch((error) => {
-            console.log(error.message);
-            // alert(error);
-        })
-        .then(res => {
-            console.log(res.data);
 
-            setReRender(!reRender)
-            navigate('/home')
-        })
+        const promise = createIncome(body, getConfig(token))
+            .catch((error) => {
+                console.log(error.message);
+                // alert(error);
+            })
+            .then(res => {
+                console.log(res.data);
+
+                setReRender(!reRender)
+                navigate('/home')
+            })
 
     }
 
@@ -50,23 +51,27 @@ export default function Income() {
 
         <Wrapper>
             <HomeTitle>Nova entrada</HomeTitle>
-            <InputValue 
-            type='number' 
-            name='value'
-            placeholder="Valor"
-            onChange={handleForm}
-            value={form.value}
-            />
-            <InputDescription 
-            type='text' 
-            name='description'
-            placeholder="Descrição"
-            onChange={handleForm}
-            value={form.description}
-            />
-            <ConfirmButton onClick={sendForm}>
-                Salvar entrada
-            </ConfirmButton>
+            <FormWrapper onSubmit={sendForm}>
+                <InputValue
+                    type='number'
+                    name='value'
+                    placeholder="Valor"
+                    onChange={handleForm}
+                    value={form.value}
+                />
+                <InputDescription
+                    type='text'
+                    name='description'
+                    placeholder="Descrição"
+                    onChange={handleForm}
+                    value={form.description}
+                />
+                <ConfirmButton type= 'submit'>
+                    Salvar entrada
+                </ConfirmButton>
+
+            </FormWrapper>
+
         </Wrapper>
 
     );
@@ -96,7 +101,10 @@ display:flex;
 justify-content: flex-start;
 
 `
+const FormWrapper = styled.form`
+width: 87vw;
 
+`
 const InputValue = styled.input`
 width: 87vw;
 height: 8vh;

@@ -1,16 +1,20 @@
-import { useContext, useEffect } from "react";
+import { useContext} from "react";
 import styled from "styled-components";
 import { deleteRegister } from '../../Services/api'
 import getConfig from '../../Services/getConfig'
 import globalContext from '../../Context/globalContext'
+import { useNavigate } from "react-router-dom";
 
 export default function BalanceItem({ value }) {
 
     const { token, reRender, setReRender } = useContext(globalContext)
+    const navigate = useNavigate()
 
     function deleteItem() {
+        
 
-        const promise = deleteRegister(value._id, getConfig(token))
+        if(window.confirm('tem certeza que deseja deletar o registro?')){
+            const promise = deleteRegister(value._id, getConfig(token))
             .catch(() => {
                 console.log('error')
             })
@@ -20,14 +24,28 @@ export default function BalanceItem({ value }) {
                 // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
                 // ajustar o reRender
             })
+        }
+        
+    }
+
+    function updateItem(){
+
+        if(value.type === 'income'){
+        navigate(`/update-income/${value._id}`)
+        }
+        if(value.type === 'outcome'){
+            navigate(`/update-outcome/${value._id}`)
+            }
     }
 
     return (
         <MiniWrapper >
             <Day>{value.day}</Day>
-            <Description>{value.description}</Description>
+            <Description onClick={updateItem}>
+                {value.description}
+            </Description>
             <Value type={value.type} >
-                {Number(value.value).toLocaleString('pt-BR')}
+                {Number(value.value).toFixed(2).toLocaleString('pt-BR')}
             </Value>
             <ion-icon
                 onClick={deleteItem}

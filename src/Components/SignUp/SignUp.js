@@ -168,7 +168,6 @@ color: #000;
     margin-left: 10px;
     
 }
-
 `;
 
 const ConfirmButton = styled.button`
@@ -185,8 +184,6 @@ font-size: 20px;
 color: #fff;
 
 cursor: pointer;
-
-
 `;
 
 const MiniWrapper = styled.div`
@@ -203,6 +200,4 @@ color: #fff;
 text-decoration-line: underline;
 
 cursor: pointer;
-
-
 `;

@@ -94,6 +94,9 @@ color: #FFF;
 
 display:flex;
 justify-content: flex-start;
+`
+const FormWrapper = styled.form`
+width: 87vw;
 
 `
 

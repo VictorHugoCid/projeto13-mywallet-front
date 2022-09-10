@@ -1,19 +1,19 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import GlobalContext from "../../Context/globalContext";
-import dayjs from "dayjs";
+import {updateIncome} from "../../Services/api"
+import getConfig from '../../Services/getConfig'
 
-export default function Update_Income() {
+export default function Update_Income({value}) {
 
     const navigate = useNavigate();
-    const { array, setArray } = useContext(GlobalContext);
+    const { token, reRender, setReRender} = useContext(GlobalContext);
+    const id = useParams()
 
     const [form, setForm] = useState({
         value: '',
         description: '',
-        day: dayjs(new Date()).format('DD/MM'),
-        type: 'outcome',
     });
 
     function handleForm(e) {
@@ -25,13 +25,22 @@ export default function Update_Income() {
     }
 
     function sendForm() {
-        setArray([...array, {
+        const body = {
             value: Number(form.value),
             description: form.description,
-            type: 'outcome',
-        }])
+        }
+        console.log(body)
+        const promise = updateIncome(body,id.id, getConfig(token))
+        .catch((error) => {
+            console.log(error.message);
+            // alert(error);
+        })
+        .then(res => {
+            console.log(res.data);
 
-        navigate('/home')
+            setReRender(!reRender)
+            navigate('/home')
+        })
     }
 
     return (
@@ -84,6 +93,9 @@ color: #FFF;
 
 display:flex;
 justify-content: flex-start;
+`
+const FormWrapper = styled.form`
+width: 87vw;
 
 `
 
@@ -101,6 +113,9 @@ color: #000;
 margin-left: 10px;
 
 }
+
+-moz-appearance: textfield;
+
 `;
 
 const InputDescription = styled.input`
@@ -118,7 +133,6 @@ margin-left: 10px;
 
 }
 
--moz-appearance: textfield;
 
 `;
 

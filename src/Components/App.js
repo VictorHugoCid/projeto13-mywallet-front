@@ -58,7 +58,7 @@ export default function App() {
                         <Route path="/home" element={<Home />} />
                         <Route path="/income" element={<Income />} />
                         <Route path="/outcome" element={<Outcome />} />
-                        <Route path="/Update-Income/:id" element={<Update_Income />} />
+                        <Route path="/update-income/:id" element={<Update_Income />} />
                         <Route path="/Update-Outcome/:id" element={<Update_Outcome />} />
                     </Routes>
                 </BrowserRouter>
