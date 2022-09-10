@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState, useContext } from "react";
 import GlobalContext from '../../Context/globalContext';
 import { logIn } from "../../Services/api";
 
 export default function LogIn() {
 
-    const { setUsername } = useContext(GlobalContext);
+    const { setToken, setUsername } = useContext(GlobalContext);
     const navigate = useNavigate();
 
     const [password, setPassword] = useState('')
@@ -22,21 +22,19 @@ export default function LogIn() {
             password,
         }
 
-        // const promise = logIn(body)
-        //     .catch((err) => {
-        //         alert(err.message);
-        //     })
-        //     .then((res) => {
-        //         setUsername(res.data.username)
+        const promise = logIn(body)
+            .catch((err) => {
+                alert(err.message);
+            })
+            .then((res) => {
+                // console.log(res.data)
+                setUsername(res.data.username)
+                setToken(res.data.token)
 
-        //         setTimeout(() =>{
-        //             navigate('/home');
-        //         }, 1000);
-        //     })
-
-        setUsername('rodilindo')
-        navigate('home')
-
+                setTimeout(() =>{
+                    navigate('/home');
+                }, 1000);
+            })
     }
 
     return (

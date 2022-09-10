@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useState, useContext } from "react";
@@ -50,17 +49,20 @@ export default function SingUp() {
             password: form.password,
         }
 
-        // const promise = signUp(body)
-        //     .catch(err => {
-        //         alert(err.message);
-        //     })
-        //     .then(res => {
-        //         navigate('/')
-        //     }, 1000);
-
+        const promise = signUp(body)
+        promise
+            .catch(err => {
+                alert(err.message);
+            })
+            .then(res => {
+                alert(res.data)
+                navigate('/')
+            });
     }
 
+    // Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at https://localhost:5000/signup. (Reason: CORS request did not succeed). Status code: (null)
 
+    // Uncaught (in promise) TypeError: res is undefined
 
 
     return (

@@ -3,29 +3,24 @@ import styled from "styled-components";
 import { deleteRegister } from '../../Services/api'
 import getConfig from '../../Services/getConfig'
 import globalContext from '../../Context/globalContext'
-import { useNavigate } from "react-router-dom";
 
 export default function BalanceItem({ value }) {
 
-    const navigate = useNavigate()
-    const { token } = useContext(globalContext)
+    const { token, reRender, setReRender } = useContext(globalContext)
 
-    function deleteItem(){
+    function deleteItem() {
 
-        useEffect(() =>{
-
-            const promise = deleteRegister(value._id, getConfig(token))
-                .catch(()=>{
-                    alert('error')
-                })
-                .then(res =>{
-                    navigate('/Home')
-                })
-        }, [])
-
+        const promise = deleteRegister(value._id, getConfig(token))
+            .catch(() => {
+                console.log('error')
+            })
+            .then(res => {
+                console.log(res.data)
+                setReRender(!reRender)
+                // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                // ajustar o reRender
+            })
     }
-    
-    
 
     return (
         <MiniWrapper >
@@ -113,8 +108,5 @@ color: ${props => {
             return '#C70000'
         }
     }}
-
-
-
 
 `

@@ -3,17 +3,17 @@ import GlobalContext from "../../Context/globalContext";
 import React, { useContext, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
+import { createIncome } from "../../Services/api";
+import getConfig from "../../Services/getConfig";
 
 export default function Income() {
     
     const navigate = useNavigate();
-    const { array, setArray } = useContext(GlobalContext);
+    const { reRender, setReRender, token } = useContext(GlobalContext);
 
     const [form, setForm] = useState({
         value:'',
         description:'',
-        day: dayjs(new Date()).format('DD/MM'),
-        type: 'income',
     });
 
     function handleForm(e){
@@ -25,14 +25,25 @@ export default function Income() {
     }
 
     function sendForm(){
-        setArray([...array,{
-            day :dayjs(new Date()).format('DD/MM'),
+        const body = {
+            day: dayjs(new Date()).format('DD/MM'),
             value: Number(form.value),
             description: form.description,
             type: 'income',
-        }])
+        }
+        
+        const promise = createIncome(body, getConfig(token))
+        .catch((error) => {
+            console.log(error.message);
+            // alert(error);
+        })
+        .then(res => {
+            console.log(res.data);
 
-        navigate('/home')
+            setReRender(!reRender)
+            navigate('/home')
+        })
+
     }
 
     return (
@@ -58,9 +69,7 @@ export default function Income() {
             </ConfirmButton>
         </Wrapper>
 
-
     );
-
 }
 
 

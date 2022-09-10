@@ -1,24 +1,43 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import GlobalContext from "../../Context/globalContext";
 import BalanceItem from '../BalanceItem/BalanceItem';
+import { getBalance } from '../../Services/api'
+import getConfig from '../../Services/getConfig'
 
 export default function Home() {
 
     const navigate = useNavigate();
 
-    const { username, array } = useContext(GlobalContext)
+    const { username, token, reRender, setReRender } = useContext(GlobalContext)
+
+    const [balance, setBalance] = useState([])
+
+    useEffect(() => {
+
+        const promise = getBalance(getConfig(token))
+        promise
+            .catch(() => {
+                alert('error')
+                // ajustar error
+            })
+            .then(res => {
+                setBalance(res.data)
+            })
+
+    }, [reRender])
 
     let sum = 0;
-    for (let i = 0; i < array.length; i++) {
-        if (array[i].type === 'income') {
-            sum += Number(array[i].value)
+    for (let i = 0; i < balance.length; i++) {
+        if (balance[i].type === 'income') {
+            sum += Number(balance[i].value)
         }
-        if (array[i].type === 'outcome') {
-            sum = sum - Number(array[i].value)
+        if (balance[i].type === 'outcome') {
+            sum = sum - Number(balance[i].value)
         }
     }
+
 
     return (
 
@@ -31,8 +50,12 @@ export default function Home() {
 
 
             <Container >
-                {array.map((value,index) => (
-                    <BalanceItem key={index} value={value}/>
+                {balance.map((value, index) => (
+                    <BalanceItem
+                        key={index}
+                        value={value}
+                        type={value.type}
+                    />
                 ))}
 
                 <Balance sum={sum}>
@@ -115,6 +138,8 @@ right: 10px;
 
 display: flex;
 justify-content: space-between;
+
+background-color: #FFF;
 
 h1{
     font-size: 20px;

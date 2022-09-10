@@ -3,7 +3,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import GlobalStyle from '../Styles/globalStyle';
 import { useState } from 'react';
-import globalContext from '../Context/globalContext';
+import GlobalContext from '../Context/globalContext';
 
 import LogIn from './LogIn/LogIn';
 import SingUp from './SignUp/SignUp';
@@ -16,38 +16,41 @@ import Update_Outcome from './Update_Outcome/Update_Outcome.js';
 
 
 export default function App() {
+    const token = 'd1474bda-6e5e-40df-8706-e4e726ac79fe'
+    // const[token, setToken] = useState('');
+    const[reRender, setReRender] = useState(true);
 
     const [username, setUsername] = useState('')
     const [day, setDay] = useState('')
     const [description, setDescription] = useState('')
     const [type, setType] = useState('')
     const [value, setValue] = useState('')
-    const[array, setArray] = useState([
-        {
-            day: '30/11',
-            description: 'almoço mãe',
-            type: 'outcome',
-            value: "40.15",
+    // const[array, setArray] = useState([
+    //     {
+    //         day: '30/11',
+    //         description: 'almoço mãe',
+    //         type: 'outcome',
+    //         value: "40.15",
 
-        }, {
-            day: '05/12',
-            description: 'salário',
-            type: 'income',
-            value: '4000',
+    //     }, {
+    //         day: '05/12',
+    //         description: 'salário',
+    //         type: 'income',
+    //         value: '4000',
 
-        }, {
-            day: '06/12',
-            description: 'provi',
-            type: 'outcome',
-            value: '800',
+    //     }, {
+    //         day: '06/12',
+    //         description: 'provi',
+    //         type: 'outcome',
+    //         value: '800',
 
-        }
-    ])
+    //     }
+    // ])
 
     return (
         <>
             <GlobalStyle />
-            <globalContext.Provider value = {{username, setUsername, setDay, setDescription, setType, setValue, array, setArray}}>
+            <GlobalContext.Provider value = {{username, setUsername, setDay, setDescription, setType, setValue, token/* , setToken */, setReRender}}>
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<LogIn />} />
@@ -59,7 +62,7 @@ export default function App() {
                         <Route path="/Update-Outcome/:id" element={<Update_Outcome />} />
                     </Routes>
                 </BrowserRouter>
-            </globalContext.Provider>
+            </GlobalContext.Provider>
         </>
     );
 }

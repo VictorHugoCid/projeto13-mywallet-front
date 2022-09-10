@@ -3,17 +3,17 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import GlobalContext from "../../Context/globalContext";
 import dayjs from "dayjs";
+import { createOutcome } from '../../Services/api'
+import getConfig from '../../Services/getConfig'
 
 export default function Outcome() {
 
     const navigate = useNavigate();
-    const { array, setArray } = useContext(GlobalContext);
+    const {reRender, setReRender, token} = useContext(GlobalContext)
 
     const [form, setForm] = useState({
         value: '',
         description: '',
-        day: dayjs(new Date()).format('DD/MM'),
-        type: 'outcome',
     });
 
     function handleForm(e) {
@@ -25,14 +25,25 @@ export default function Outcome() {
     }
 
     function sendForm() {
-        setArray([...array, {
+        const body = {
             day: dayjs(new Date()).format('DD/MM'),
             value: Number(form.value),
             description: form.description,
             type: 'outcome',
-        }])
+        }
 
-        navigate('/home')
+        const promise = createOutcome(body, getConfig(token))
+            .catch((error) => {
+                console.log(error.message);
+                // alert('error');
+
+            })
+            .then(res => {
+                console.log(res.data);
+
+                setReRender(!reRender)
+                navigate('/home')
+            })
     }
 
     return (
@@ -58,9 +69,7 @@ export default function Outcome() {
             </ConfirmButton>
         </Wrapper>
 
-
     );
-
 }
 
 
@@ -102,6 +111,9 @@ color: #000;
 margin-left: 10px;
 
 }
+
+-moz-appearance: textfield;
+
 `;
 
 const InputDescription = styled.input`
@@ -119,7 +131,8 @@ margin-left: 10px;
 
 }
 
--moz-appearance: textfield;
+
+
 
 `;
 

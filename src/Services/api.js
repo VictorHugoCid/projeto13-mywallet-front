@@ -1,39 +1,35 @@
 import axios from "axios";
 
-//  vai mudar pro localhost
-const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit";
-
-
+const URL = "http://localhost:5000";
 
 // Sign-Up--------------------------------
 function signUp(body) {
-    return axios.post(`${URL}/signUp`, body)
+    return axios.post(`${URL}/signup`, body)
 }
 
+// LogIn
 function logIn(body) {
-    return axios.post(`${URL}/signIn`, body)
+    return axios.post(`${URL}/signin`, body)
 }
 
 // Income--------------------------------
 function createIncome(body, getConfig) {
-    return axios.post(`${URL}/balance`, body, getConfig)
+    return axios.post(`${URL}/income`, body, getConfig)
 }
 
 // Outcome--------------------------------
 function createOutcome(body, getConfig) {
-    return axios.post(`${URL}/balance`, body, getConfig)
+    return axios.post(`${URL}/outcome`, body, getConfig)
 }
 
 // Home--------------------------------
-
 function getBalance(getConfig) {
-    return axios.get(`${URL}/balance`, getConfig)
+    return axios.get(`${URL}/home`, getConfig)
 }
 
 // Delete --------------------------------
-
 function deleteRegister(id, getConfig) {
-    return axios.delete(`${URL}/habits/${id}`,getConfig)
+    return axios.delete(`${URL}/delete/${id}`,getConfig)
 }
 
 // Update-------------------------------
