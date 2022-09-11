@@ -25,32 +25,11 @@ export default function App() {
     const [description, setDescription] = useState('')
     const [type, setType] = useState('')
     const [value, setValue] = useState('')
-    // const[array, setArray] = useState([
-    //     {
-    //         day: '30/11',
-    //         description: 'almoço mãe',
-    //         type: 'outcome',
-    //         value: "40.15",
-
-    //     }, {
-    //         day: '05/12',
-    //         description: 'salário',
-    //         type: 'income',
-    //         value: '4000',
-
-    //     }, {
-    //         day: '06/12',
-    //         description: 'provi',
-    //         type: 'outcome',
-    //         value: '800',
-
-    //     }
-    // ])
 
     return (
         <>
             <GlobalStyle />
-            <GlobalContext.Provider value = {{username, setUsername, setDay, setDescription, setType, setValue, token/* , setToken */, setReRender}}>
+            <GlobalContext.Provider value = {{username, setUsername, setDay, setDescription, setType, setValue, token/* , setToken */, reRender, setReRender}}>
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<LogIn />} />

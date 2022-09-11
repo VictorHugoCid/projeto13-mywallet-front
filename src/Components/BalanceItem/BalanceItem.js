@@ -1,4 +1,4 @@
-import { useContext} from "react";
+import { useContext } from "react";
 import styled from "styled-components";
 import { deleteRegister } from '../../Services/api'
 import getConfig from '../../Services/getConfig'
@@ -11,31 +11,30 @@ export default function BalanceItem({ value }) {
     const navigate = useNavigate()
 
     function deleteItem() {
-        
+        if (window.confirm('tem certeza que deseja deletar o registro?')) {
 
-        if(window.confirm('tem certeza que deseja deletar o registro?')){
             const promise = deleteRegister(value._id, getConfig(token))
-            .catch(() => {
-                console.log('error')
-            })
-            .then(res => {
-                console.log(res.data)
-                setReRender(!reRender)
-                // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-                // ajustar o reRender
-            })
+            promise
+                .catch((error) => {
+                    console.log(error.message)
+                })
+                .then(res => {
+                    console.log(res.data)
+                    setReRender(!reRender)
+
+                })
         }
-        
+
     }
 
-    function updateItem(){
+    function updateItem() {
 
-        if(value.type === 'income'){
-        navigate(`/update-income/${value._id}`)
+        if (value.type === 'income') {
+            navigate(`/update-income/${value._id}`)
         }
-        if(value.type === 'outcome'){
+        if (value.type === 'outcome') {
             navigate(`/update-outcome/${value._id}`)
-            }
+        }
     }
 
     return (
