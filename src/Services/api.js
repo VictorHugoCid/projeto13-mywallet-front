@@ -19,13 +19,17 @@ function getBalance(getConfig) {
     return axios.get(`${URL}/home`, getConfig)
 }
 // Update-------------------------------
-function updateRegister(body,id, getConfig) {
-    return axios.put(`${URL}/updateRegister/${id}`,body,  getConfig)
+function updateRegister(body, id, getConfig) {
+    return axios.put(`${URL}/updateRegister/${id}`, body, getConfig)
 }
 // Delete --------------------------------
 function deleteRegister(id, getConfig) {
-    console.log('passando')
-    return axios.delete(`${URL}/deleteRegister/${id}`,getConfig)
+    return axios.delete(`${URL}/deleteRegister/${id}`, getConfig)
+}
+
+function logOut(getConfig) {
+    return axios.delete(`${URL}/logOut`, getConfig)
+
 }
 
 export {
@@ -34,6 +38,7 @@ export {
     createRegister,
     getBalance,
     deleteRegister,
-    updateRegister
+    updateRegister,
+    logOut
 }
 

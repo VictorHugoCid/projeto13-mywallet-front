@@ -14,8 +14,17 @@ export default function LogIn() {
     const [email, setEmail] = useState('')
     const [disable, setDisable] = useState(false)
 
-    function sendForm() {
-        setDisable(true);
+    // let userList = JSON.parse(localStorage.getItem('userList') || '[]');
+
+    const [form, setForm] = useState({
+        email: '',
+        password: '',
+    })
+
+    function sendForm(e) {
+        // setDisable(true);
+
+        e.preventDefault()
 
         const body = {
             email,
@@ -32,7 +41,16 @@ export default function LogIn() {
                 setUsername(res.data.username)
                 setToken(res.data.token)
 
-                setTimeout(() =>{
+
+                // userList.push({
+                //     username: res.data.username,
+                //     token:res.data.token,
+                // })
+
+                // localStorage.setItem('userList', JSON.stringify(userList))
+                // console.log(userList)
+
+                setTimeout(() => {
                     navigate('/home');
                 }, 1000);
             })
@@ -42,22 +60,28 @@ export default function LogIn() {
 
         <Wrapper>
             <HomeTitle>My Wallet</HomeTitle>
-            <InputLogin
-                type='email'
-                placeholder="E-mail"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-                disabled={disable}
-            />
-            <InputLogin
-                type='password'
-                placeholder="Senha"
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-                disabled={disable}
-            />
+            <FormWrapper onSubmit={sendForm}>
+                <InputLogin
+                    type='email'
+                    placeholder="E-mail"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                    disabled={disable}
+                />
+                <InputLogin
+                    type='password'
+                    placeholder="Senha"
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                    disabled={disable}
+                />
 
-            <ConfirmButton onClick={sendForm}>Entrar</ConfirmButton>
+                <ConfirmButton type='submit'>
+                    Entrar
+                </ConfirmButton>
+
+            </FormWrapper>
+
             <MiniWrapper>
                 <Link to='/signup'>Primeira vez? Cadastre-se</Link>
             </MiniWrapper>
@@ -141,6 +165,9 @@ color: #fff;
 text-decoration-line: underline;
 
 cursor: pointer;
-
-
 `;
+
+const FormWrapper = styled.form`
+width: 87vw;
+
+`

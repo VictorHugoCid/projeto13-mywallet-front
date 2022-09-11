@@ -9,7 +9,7 @@ import getConfig from '../../Services/getConfig'
 export default function Outcome() {
 
     const navigate = useNavigate();
-    const {reRender, setReRender, token} = useContext(GlobalContext)
+    const { reRender, setReRender, token } = useContext(GlobalContext)
 
     const [form, setForm] = useState({
         value: '',
@@ -24,7 +24,9 @@ export default function Outcome() {
 
     }
 
-    function sendForm() {
+    function sendForm(e) {
+        e.preventDefault()
+
         const body = {
             day: dayjs(new Date()).format('DD/MM'),
             value: Number(form.value),
@@ -50,23 +52,25 @@ export default function Outcome() {
 
         <Wrapper>
             <HomeTitle>Nova saída</HomeTitle>
-            <InputValue
-                type='number'
-                name='value'
-                placeholder="Valor"
-                onChange={handleForm}
-                value={form.value}
-            />
-            <InputDescription
-                type='text'
-                name='description'
-                placeholder="Descrição"
-                onChange={handleForm}
-                value={form.description}
-            />
-            <ConfirmButton onClick={sendForm}>
-                Salvar saída
-            </ConfirmButton>
+            <FormWrapper onSubmit={sendForm}>
+                <InputValue
+                    type='number'
+                    name='value'
+                    placeholder="Valor"
+                    onChange={handleForm}
+                    value={form.value}
+                />
+                <InputDescription
+                    type='text'
+                    name='description'
+                    placeholder="Descrição"
+                    onChange={handleForm}
+                    value={form.description}
+                />
+                <ConfirmButton type='submit'>
+                    Salvar saída
+                </ConfirmButton>
+            </FormWrapper>
         </Wrapper>
 
     );

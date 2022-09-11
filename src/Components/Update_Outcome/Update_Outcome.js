@@ -24,12 +24,13 @@ export default function Update_Outcome() {
 
     }
 
-    function sendForm() {
+    function sendForm(e) {
+
+        e.preventDefault()
         const body = {
             value: Number(form.value),
             description: form.description,
         }
-        console.log(body)
         const promise = updateRegister(body, id.id, getConfig(token))
             .catch((error) => {
                 console.log(error.message);
@@ -47,23 +48,27 @@ export default function Update_Outcome() {
 
         <Wrapper>
             <HomeTitle>Editar saída</HomeTitle>
-            <InputValue
-                type='number'
-                name='value'
-                placeholder="Valor"
-                onChange={handleForm}
-                value={form.value}
-            />
-            <InputDescription
-                type='text'
-                name='description'
-                placeholder="Descrição"
-                onChange={handleForm}
-                value={form.description}
-            />
-            <ConfirmButton onClick={sendForm}>
-                Atualizar saída
-            </ConfirmButton>
+            <FormWrapper onSubmit={sendForm}>
+                <InputValue
+                    type='number'
+                    name='value'
+                    placeholder="Valor"
+                    onChange={handleForm}
+                    value={form.value}
+                />
+                <InputDescription
+                    type='text'
+                    name='description'
+                    placeholder="Descrição"
+                    onChange={handleForm}
+                    value={form.description}
+                />
+                <ConfirmButton type='submit'>
+                    Atualizar saída
+                </ConfirmButton>
+
+            </FormWrapper>
+
         </Wrapper>
 
 

@@ -1,5 +1,3 @@
-// import React from 'react';
-
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import GlobalStyle from '../Styles/globalStyle';
 import { useState } from 'react';
@@ -13,12 +11,9 @@ import Outcome from './Outcome/Outcome.js';
 import Update_Income from './Update_Income/Update_Income.js';
 import Update_Outcome from './Update_Outcome/Update_Outcome.js';
 
-
-
 export default function App() {
-    const token = 'd1474bda-6e5e-40df-8706-e4e726ac79fe'
-    // const token = 'd1474bda-6e5e-40df-8706-e4e726ac7'
-    // const[token, setToken] = useState('');
+    // const token = 'd1474bda-6e5e-40df-8706-e4e726ac79fe'
+    const[token, setToken] = useState('');
     const[reRender, setReRender] = useState(true);
 
     const [username, setUsername] = useState('')
@@ -30,7 +25,7 @@ export default function App() {
     return (
         <>
             <GlobalStyle />
-            <GlobalContext.Provider value = {{username, setUsername, setDay, setDescription, setType, setValue, token/* , setToken */, reRender, setReRender}}>
+            <GlobalContext.Provider value = {{username, setUsername, setDay, setDescription, setType, setValue, token, setToken, reRender, setReRender}}>
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<LogIn />} />

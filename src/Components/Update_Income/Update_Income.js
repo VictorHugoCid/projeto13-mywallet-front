@@ -24,12 +24,13 @@ export default function Update_Income({ value }) {
 
     }
 
-    function sendForm() {
+    function sendForm(e) {
+        e.preventDefault()
+
         const body = {
             value: Number(form.value),
             description: form.description,
         }
-        console.log(body)
         const promise = updateRegister(body, id.id, getConfig(token))
             .catch((err) => {
                 console.log(err.response.data);
@@ -47,23 +48,28 @@ export default function Update_Income({ value }) {
 
         <Wrapper>
             <HomeTitle>Editar entrada</HomeTitle>
-            <InputValue
-                type='number'
-                name='value'
-                placeholder="Valor"
-                onChange={handleForm}
-                value={form.value}
-            />
-            <InputDescription
-                type='text'
-                name='description'
-                placeholder="Descrição"
-                onChange={handleForm}
-                value={form.description}
-            />
-            <ConfirmButton onClick={sendForm}>
-                Atualizar entrada
-            </ConfirmButton>
+
+            <FormWrapper onSubmit={sendForm}>
+                <InputValue
+                    type='number'
+                    name='value'
+                    placeholder="Valor"
+                    onChange={handleForm}
+                    value={form.value}
+                />
+                <InputDescription
+                    type='text'
+                    name='description'
+                    placeholder="Descrição"
+                    onChange={handleForm}
+                    value={form.description}
+                />
+                <ConfirmButton type='submit'>
+                    Atualizar entrada
+                </ConfirmButton>
+
+            </FormWrapper>
+
         </Wrapper>
 
 

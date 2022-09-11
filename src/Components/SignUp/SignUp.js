@@ -52,18 +52,13 @@ export default function SingUp() {
         const promise = signUp(body)
         promise
             .catch(err => {
-                alert(err.message);
+                alert(err.response.data);
             })
             .then(res => {
-                alert(res.data)
+                // alert(res.data)
                 navigate('/')
             });
     }
-
-    // Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at https://localhost:5000/signup. (Reason: CORS request did not succeed). Status code: (null)
-
-    // Uncaught (in promise) TypeError: res is undefined
-
 
     return (
 

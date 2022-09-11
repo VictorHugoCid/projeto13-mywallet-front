@@ -5,6 +5,7 @@ import GlobalContext from "../../Context/globalContext";
 import BalanceItem from '../BalanceItem/BalanceItem';
 import { getBalance } from '../../Services/api'
 import getConfig from '../../Services/getConfig'
+import { logOut } from "../../Services/api";
 
 export default function Home() {
 
@@ -40,29 +41,55 @@ export default function Home() {
     }
 
 
+
+    // Não há registros de
+    // entrada ou saída
     return (
 
         <Wrapper>
 
             <HomeTitle>
                 <p>Olá, {username}</p>
-                <ion-icon name="log-out-outline"></ion-icon>
+                <ion-icon
+                    onClick={() => {
+                        if (window.confirm('Tem certeza que deseja deslogar?')) {
+                            logOut(getConfig(token))
+                            setTimeout(() => {
+                                navigate('/')
+                            }, 1000)
+
+                        }
+                    }}
+                    name="log-out-outline"
+                />
             </HomeTitle>
 
 
             <Container >
-                {balance.map((value, index) => (
-                    <BalanceItem
-                        key={index}
-                        value={value}
-                        type={value.type}
-                    />
-                ))}
+                {(balance.length !== 0) ? (
+                    <>
+                        {balance.map((value, index) => (
+                            <BalanceItem
+                                key={index}
+                                value={value}
+                                type={value.type}
+                            />
+                        ))}
 
-                <Balance sum={sum}>
-                    <h1>Saldo</h1>
-                    <h2>{sum.toLocaleString('pt-BR')}</h2>
-                </Balance>
+                        <Balance sum={sum}>
+                            <h1>Saldo</h1>
+                            <h2>{sum.toLocaleString('pt-BR')}</h2>
+                        </Balance>
+                    </>
+
+                ) : (
+                    <NoRegistersWrapper>
+                        Não há registros de entrada ou saída
+                    </NoRegistersWrapper>
+
+                )}
+
+
 
             </Container>
 
@@ -127,7 +154,6 @@ color: #868686;
 display: flex;
 
 position: relative;
-
 
 `;
 
@@ -200,52 +226,16 @@ p{
 
 `;
 
-const MiniWrapper = styled.div`
-width: 100%;
-height: auto;
+const NoRegistersWrapper = styled.div`
 
-display:flex;
-justify-content: flex-start;
-
-padding: 10px;
-
-font-size: 16px;
-font-weight: 900;
-color: #fff;
-`;
-
-const Day = styled.div`
-width: 50px;
-margin-left: 8px;
-
-color:#C6C6C6;
-
-`
-const Description = styled.div`
-width: 310px;
-margin-left: 8px;
-
-color:#000;
-
-`
-const Value = styled.div`
-width: 50px;
-margin-left: 8px;
+width: 87vw;
+height: 67vh;
 
 display: flex;
-justify-content: flex-end;
+justify-content: center;
+align-items: center;
 
-/* color: #03AC00; */
-    /* color: #C70000; */
-color: ${props => {
-        if (props.type === 'income') {
-            return '#03AC00'
-        }
-        if (props.type === 'outcome') {
-            return '#C70000'
-        }
-    }}
+font-size: 32px;
+text-align: center;
+
 `
-
-
-
