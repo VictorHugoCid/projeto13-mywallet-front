@@ -31,8 +31,8 @@ export default function Update_Income({ value }) {
         }
         console.log(body)
         const promise = updateRegister(body, id.id, getConfig(token))
-            .catch((error) => {
-                console.log(error.message);
+            .catch((err) => {
+                console.log(err.response.data);
                 // alert(error);
             })
             .then(res => {

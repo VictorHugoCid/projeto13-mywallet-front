@@ -24,7 +24,8 @@ export default function LogIn() {
 
         const promise = logIn(body)
             .catch((err) => {
-                alert(err.message);
+                alert(err.response.data);
+                // console.log(err.response.data)
             })
             .then((res) => {
                 // console.log(res.data)

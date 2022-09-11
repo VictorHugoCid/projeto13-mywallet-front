@@ -18,8 +18,9 @@ export default function Home() {
 
         const promise = getBalance(getConfig(token))
         promise
-            .catch(() => {
-                alert('error')
+            .catch((err) => {
+                // console.log(err.response.data)
+                alert(err.response.data)
                 // ajustar error
             })
             .then(res => {
