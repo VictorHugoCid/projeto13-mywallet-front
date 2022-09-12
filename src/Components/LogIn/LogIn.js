@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from 'react-router-dom'
-import { useState, useContext } from "react";
-import GlobalContext from '../../Context/globalContext';
+import { useState } from "react";
 import { logIn } from "../../Services/api";
 
 export default function LogIn() {
@@ -23,35 +22,28 @@ export default function LogIn() {
 
     }
 
-    function clearForm(e){
+    function clearForm() {
         setForm({
             email: '',
-            password:'',
-            
-        })
+            password: '',
 
-        setDisable(!disable)
+        })
+        setDisable(false)
     }
 
-    function sendForm(e) {
+    async function sendForm(e) {
         e.preventDefault()
 
-        
-        if(disable === true){
+        if (disable === true) {
             return;
         }
-        setDisable(!disable)
+        setDisable(true)
 
         const body = {
-            email:form.email,
-            password:form.password,
+            email: form.email,
+            password: form.password,
         }
         const promise = logIn(body)
-            .catch((err) => {
-                alert(err.response.data);
-                clearForm();
-
-            })
             .then((res) => {
 
                 localStorage.setItem('token', res.data.token)
@@ -61,6 +53,30 @@ export default function LogIn() {
                     navigate('/home');
                 }, 1000);
             })
+            .catch((err) => {
+                alert(err.response.data);
+                clearForm();
+
+            })
+
+
+            // para futuro estudo
+        // try {
+        //     const response = await logIn(body)
+
+        //     if (response.status === 201) {
+        //         localStorage.setItem('token', res.data.token)
+        //         localStorage.setItem('username', res.data.username)
+
+        //         setTimeout(() => {
+        //             navigate('/home');
+        //         }, 1000);
+        //     }
+
+        // } catch (error) {
+        //     console.error(error)
+        // }
+
     }
 
     return (

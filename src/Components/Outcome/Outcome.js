@@ -1,7 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import GlobalContext from "../../Context/globalContext";
 import dayjs from "dayjs";
 import { createRegister } from '../../Services/api'
 import getConfig from '../../Services/getConfig'
@@ -29,7 +28,7 @@ export default function Outcome() {
     function sendForm(e) {
         e.preventDefault()
         setDisable(!disable)
-        if(disable === true){
+        if (disable === true) {
             return;
         }
 
@@ -41,13 +40,14 @@ export default function Outcome() {
         }
 
         const promise = createRegister(body, getConfig(token))
+            .then(res => {
+                navigate('/home')
+            })
             .catch((error) => {
                 alert(error.response.data);
 
             })
-            .then(res => {
-                navigate('/home')
-            })
+
     }
 
     return (
@@ -61,7 +61,7 @@ export default function Outcome() {
                     placeholder="Valor"
                     onChange={handleForm}
                     value={form.value}
-                    required
+                    // required
                 />
                 <InputDescription
                     type='text'
@@ -69,7 +69,7 @@ export default function Outcome() {
                     placeholder="Descrição"
                     onChange={handleForm}
                     value={form.description}
-                    required
+                    // required
                 />
                 <ConfirmButton type='submit'>
                     Salvar saída

@@ -30,10 +30,10 @@ export default function SingUp() {
     }
 
     function sendForm(e) {
-        setDisable(!disable)
-        if(disable === true){
+        if (disable === true) {
             return;
         }
+        setDisable(true)
 
         e.preventDefault();
 
@@ -52,13 +52,13 @@ export default function SingUp() {
         }
 
         const promise = signUp(body)
-        promise
-            .catch(err => {
-                alert(err.response.data);
-            })
             .then(res => {
                 navigate('/')
+            })
+            .catch(err => {
+                alert(err.response.data);
             });
+
     }
 
     return (

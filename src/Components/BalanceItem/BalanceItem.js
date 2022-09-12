@@ -7,22 +7,23 @@ import { useNavigate } from "react-router-dom";
 
 export default function BalanceItem({ value }) {
 
-    const { token, reRender, setReRender } = useContext(globalContext)
+    const { reRender, setReRender } = useContext(globalContext)
     const navigate = useNavigate()
+    const token = localStorage.getItem('token')
 
     function deleteItem() {
         if (window.confirm('tem certeza que deseja deletar o registro?')) {
 
             const promise = deleteRegister(value._id, getConfig(token))
             promise
-                .catch((error) => {
-                    console.log(error.message)
-                })
                 .then(res => {
-                    console.log(res.data)
                     setReRender(!reRender)
 
                 })
+                .catch((error) => {
+                    console.log(error.message)
+                })
+
         }
 
     }
@@ -30,7 +31,7 @@ export default function BalanceItem({ value }) {
     return (
         <MiniWrapper >
             <Day>{value.day}</Day>
-            <Description onClick={() =>{
+            <Description onClick={() => {
                 navigate(`/updateRegister/${value.type}/${value._id}`)
             }}>
                 {value.description}

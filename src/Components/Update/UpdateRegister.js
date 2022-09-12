@@ -8,9 +8,10 @@ import getConfig from '../../Services/getConfig'
 export default function UpdateRegister() {
 
     const navigate = useNavigate();
-    const { token, reRender, setReRender } = useContext(GlobalContext);
+    const { reRender, setReRender } = useContext(GlobalContext);
     const [disable, setDisable] = useState(false)
-    
+    const token = localStorage.getItem('token')
+
     const id = useParams().id
     const type = useParams().type
 
@@ -31,10 +32,10 @@ export default function UpdateRegister() {
     function sendForm(e) {
 
         e.preventDefault()
-        setDisable(!disable)
         if (disable === true) {
             return;
         }
+        setDisable(true)
 
 
         const body = {
@@ -42,16 +43,15 @@ export default function UpdateRegister() {
             description: form.description,
         }
         const promise = updateRegister(type, body, id, getConfig(token))
-            .catch((error) => {
-                console.log(error.message);
-                // alert(error);
-            })
             .then(res => {
-                console.log(res.data);
 
                 setReRender(!reRender)
                 navigate('/home')
             })
+            .catch((error) => {
+                alert(error.response.data);
+            })
+
     }
 
     return (
@@ -59,9 +59,9 @@ export default function UpdateRegister() {
         <Wrapper>
             <HomeTitle>
                 {(type === 'income') ? (
-                     'Editar entrada' 
+                    'Editar entrada'
                 ) : (
-                     'Editar saída' 
+                    'Editar saída'
                 )}
             </HomeTitle>
             <FormWrapper onSubmit={sendForm}>
@@ -82,11 +82,11 @@ export default function UpdateRegister() {
                     required
                 />
                 <ConfirmButton type='submit'>
-                {(type === 'income') ? (
-                     'Atualizar entrada' 
-                ) : (
-                     'Atualizar saída' 
-                )}
+                    {(type === 'income') ? (
+                        'Atualizar entrada'
+                    ) : (
+                        'Atualizar saída'
+                    )}
                 </ConfirmButton>
 
             </FormWrapper>

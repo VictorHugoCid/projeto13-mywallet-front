@@ -11,19 +11,14 @@ import Outcome from './Outcome/Outcome.js';
 import UpdateRegister from './Update/UpdateRegister.js';
 
 export default function App() {
-    const[token, setToken] = useState('');
     const[reRender, setReRender] = useState(true);
 
-    const [username, setUsername] = useState('')
-    // const [day, setDay] = useState('')
-    // const [description, setDescription] = useState('')
-    // const [type, setType] = useState('')
     const [value, setValue] = useState('')
 
     return (
         <>
             <GlobalStyle />
-            <GlobalContext.Provider value = {{/* username, setUsername, setDay, setDescription, setType, */ setValue, token, setToken, reRender, setReRender}}>
+            <GlobalContext.Provider value = {{ setValue, reRender, setReRender}}>
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<LogIn />} />

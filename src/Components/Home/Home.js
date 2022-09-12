@@ -20,13 +20,13 @@ export default function Home() {
     useEffect(() => {
 
         const promise = getBalance(getConfig(token))
-        promise
-            .catch((err) => {
-                alert(err.response.data)
-            })
             .then(res => {
                 setBalance(res.data)
             })
+            .catch((err) => {
+                alert(err.response.data)
+            })
+
 
     }, [reRender])
 

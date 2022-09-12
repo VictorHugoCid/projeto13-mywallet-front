@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import GlobalContext from "../../Context/globalContext";
-import React, { useContext, useState } from 'react'
+import React, {  useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { createRegister } from "../../Services/api";
@@ -27,8 +26,8 @@ export default function Income() {
 
     function sendForm(e) {
         e.preventDefault();
-        
-        if(disable === true){
+
+        if (disable === true) {
             return;
         }
         setDisable(!disable)
@@ -42,12 +41,13 @@ export default function Income() {
         }
 
         const promise = createRegister(body, getConfig(token))
-            .catch((error) => {
-                alert(error.response.data);
-            })
             .then(res => {
                 navigate('/home')
             })
+            .catch((error) => {
+                alert(error.response.data);
+            })
+
 
     }
 
@@ -72,7 +72,7 @@ export default function Income() {
                     value={form.description}
                     required
                 />
-                <ConfirmButton type= 'submit'>
+                <ConfirmButton type='submit'>
                     Salvar entrada
                 </ConfirmButton>
 
