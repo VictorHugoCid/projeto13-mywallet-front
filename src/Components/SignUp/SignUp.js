@@ -73,6 +73,7 @@ export default function SingUp() {
                     onChange={handleForm}
                     value={form.username}
                     disabled={disable}
+                    required
                 />
 
                 <InputLogin
@@ -82,6 +83,7 @@ export default function SingUp() {
                     onChange={handleForm}
                     value={form.email}
                     disabled={disable}
+                    required
                 />
 
                 <InputLogin
@@ -91,6 +93,7 @@ export default function SingUp() {
                     onChange={handleForm}
                     value={form.password}
                     disabled={disable}
+                    required
                 />
 
                 <InputLogin
@@ -100,6 +103,7 @@ export default function SingUp() {
                     onChange={handleForm}
                     value={form.secondPassword}
                     disabled={disable}
+                    required
                 />
 
                 <ConfirmButton

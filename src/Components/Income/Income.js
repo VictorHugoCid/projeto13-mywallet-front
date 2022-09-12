@@ -27,10 +27,13 @@ export default function Income() {
 
     function sendForm(e) {
         e.preventDefault();
-        setDisable(!disable)
+        
         if(disable === true){
             return;
         }
+        setDisable(!disable)
+
+
         const body = {
             day: dayjs(new Date()).format('DD/MM'),
             value: Number(form.value),
@@ -59,6 +62,7 @@ export default function Income() {
                     placeholder="Valor"
                     onChange={handleForm}
                     value={form.value}
+                    required
                 />
                 <InputDescription
                     type='text'
@@ -66,6 +70,7 @@ export default function Income() {
                     placeholder="Descrição"
                     onChange={handleForm}
                     value={form.description}
+                    required
                 />
                 <ConfirmButton type= 'submit'>
                     Salvar entrada

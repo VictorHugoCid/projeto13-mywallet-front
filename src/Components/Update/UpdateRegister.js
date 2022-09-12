@@ -71,6 +71,7 @@ export default function UpdateRegister() {
                     placeholder="Valor"
                     onChange={handleForm}
                     value={form.value}
+                    required
                 />
                 <InputDescription
                     type='text'
@@ -78,6 +79,7 @@ export default function UpdateRegister() {
                     placeholder="Descrição"
                     onChange={handleForm}
                     value={form.description}
+                    required
                 />
                 <ConfirmButton type='submit'>
                 {(type === 'income') ? (

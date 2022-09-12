@@ -46,7 +46,6 @@ export default function Outcome() {
 
             })
             .then(res => {
-                console.log(res.data);
                 navigate('/home')
             })
     }
@@ -62,6 +61,7 @@ export default function Outcome() {
                     placeholder="Valor"
                     onChange={handleForm}
                     value={form.value}
+                    required
                 />
                 <InputDescription
                     type='text'
@@ -69,6 +69,7 @@ export default function Outcome() {
                     placeholder="Descrição"
                     onChange={handleForm}
                     value={form.description}
+                    required
                 />
                 <ConfirmButton type='submit'>
                     Salvar saída

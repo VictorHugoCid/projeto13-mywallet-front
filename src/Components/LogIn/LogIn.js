@@ -7,9 +7,7 @@ import { logIn } from "../../Services/api";
 
 export default function LogIn() {
 
-    const { setToken, setUsername } = useContext(GlobalContext);
     const navigate = useNavigate();
-
     const [disable, setDisable] = useState(false)
 
     const [form, setForm] = useState({
@@ -25,13 +23,24 @@ export default function LogIn() {
 
     }
 
+    function clearForm(e){
+        setForm({
+            email: '',
+            password:'',
+            
+        })
+
+        setDisable(!disable)
+    }
+
     function sendForm(e) {
         e.preventDefault()
 
-        setDisable(!disable)
+        
         if(disable === true){
             return;
         }
+        setDisable(!disable)
 
         const body = {
             email:form.email,
@@ -40,10 +49,10 @@ export default function LogIn() {
         const promise = logIn(body)
             .catch((err) => {
                 alert(err.response.data);
+                clearForm();
+
             })
             .then((res) => {
-                setUsername(res.data.username)
-                setToken(res.data.token)
 
                 localStorage.setItem('token', res.data.token)
                 localStorage.setItem('username', res.data.username)
@@ -66,6 +75,7 @@ export default function LogIn() {
                     onChange={handleForm}
                     value={form.email}
                     disabled={disable}
+                    required
                 />
                 <InputLogin
                     type='password'
@@ -74,6 +84,7 @@ export default function LogIn() {
                     onChange={handleForm}
                     value={form.password}
                     disabled={disable}
+                    required
                 />
 
                 <ConfirmButton type='submit'>
