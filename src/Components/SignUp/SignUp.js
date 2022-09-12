@@ -1,13 +1,11 @@
 import styled from "styled-components";
-import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { useState, useContext } from "react";
-import GlobalContext from '../../Context/globalContext';
+import { Link, useNavigate } from 'react-router-dom'
+import { useState } from "react";
 import { signUp } from '../../Services/api'
 
 export default function SingUp() {
 
     const navigate = useNavigate();
-    const { username, setUsername } = useContext(GlobalContext);
 
     const [disable, setDisable] = useState(false)
 
@@ -23,8 +21,8 @@ export default function SingUp() {
             ...form,
             [e.target.name]: e.target.value
         })
-
     }
+
     function verifyPassword() {
         if (form.password === form.secondPassword) {
             return true
@@ -32,6 +30,10 @@ export default function SingUp() {
     }
 
     function sendForm(e) {
+        setDisable(!disable)
+        if(disable === true){
+            return;
+        }
 
         e.preventDefault();
 
@@ -55,7 +57,6 @@ export default function SingUp() {
                 alert(err.response.data);
             })
             .then(res => {
-                // alert(res.data)
                 navigate('/')
             });
     }

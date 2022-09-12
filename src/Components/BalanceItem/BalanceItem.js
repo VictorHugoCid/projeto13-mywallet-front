@@ -27,20 +27,12 @@ export default function BalanceItem({ value }) {
 
     }
 
-    function updateItem() {
-
-        if (value.type === 'income') {
-            navigate(`/update-income/${value._id}`)
-        }
-        if (value.type === 'outcome') {
-            navigate(`/update-outcome/${value._id}`)
-        }
-    }
-
     return (
         <MiniWrapper >
             <Day>{value.day}</Day>
-            <Description onClick={updateItem}>
+            <Description onClick={() =>{
+                navigate(`/updateRegister/${value.type}/${value._id}`)
+            }}>
                 {value.description}
             </Description>
             <Value type={value.type} >

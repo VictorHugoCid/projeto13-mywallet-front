@@ -9,7 +9,9 @@ import getConfig from '../../Services/getConfig'
 export default function Outcome() {
 
     const navigate = useNavigate();
-    const { reRender, setReRender, token } = useContext(GlobalContext)
+    const [disable, setDisable] = useState(false)
+    const token = localStorage.getItem('token');
+
 
     const [form, setForm] = useState({
         value: '',
@@ -26,6 +28,10 @@ export default function Outcome() {
 
     function sendForm(e) {
         e.preventDefault()
+        setDisable(!disable)
+        if(disable === true){
+            return;
+        }
 
         const body = {
             day: dayjs(new Date()).format('DD/MM'),
@@ -36,14 +42,11 @@ export default function Outcome() {
 
         const promise = createRegister(body, getConfig(token))
             .catch((error) => {
-                console.log(error.message);
-                // alert('error');
+                alert(error.response.data);
 
             })
             .then(res => {
                 console.log(res.data);
-
-                setReRender(!reRender)
                 navigate('/home')
             })
     }

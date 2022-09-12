@@ -10,45 +10,43 @@ export default function LogIn() {
     const { setToken, setUsername } = useContext(GlobalContext);
     const navigate = useNavigate();
 
-    const [password, setPassword] = useState('')
-    const [email, setEmail] = useState('')
     const [disable, setDisable] = useState(false)
-
-    // let userList = JSON.parse(localStorage.getItem('userList') || '[]');
 
     const [form, setForm] = useState({
         email: '',
         password: '',
     })
 
-    function sendForm(e) {
-        // setDisable(true);
+    function handleForm(e) {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        })
 
+    }
+
+    function sendForm(e) {
         e.preventDefault()
 
-        const body = {
-            email,
-            password,
+        setDisable(!disable)
+        if(disable === true){
+            return;
         }
 
+        const body = {
+            email:form.email,
+            password:form.password,
+        }
         const promise = logIn(body)
             .catch((err) => {
                 alert(err.response.data);
-                // console.log(err.response.data)
             })
             .then((res) => {
-                // console.log(res.data)
                 setUsername(res.data.username)
                 setToken(res.data.token)
 
-
-                // userList.push({
-                //     username: res.data.username,
-                //     token:res.data.token,
-                // })
-
-                // localStorage.setItem('userList', JSON.stringify(userList))
-                // console.log(userList)
+                localStorage.setItem('token', res.data.token)
+                localStorage.setItem('username', res.data.username)
 
                 setTimeout(() => {
                     navigate('/home');
@@ -63,16 +61,18 @@ export default function LogIn() {
             <FormWrapper onSubmit={sendForm}>
                 <InputLogin
                     type='email'
+                    name='email'
                     placeholder="E-mail"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
+                    onChange={handleForm}
+                    value={form.email}
                     disabled={disable}
                 />
                 <InputLogin
                     type='password'
+                    name='password'
                     placeholder="Senha"
-                    onChange={(e) => setPassword(e.target.value)}
-                    value={password}
+                    onChange={handleForm}
+                    value={form.password}
                     disabled={disable}
                 />
 

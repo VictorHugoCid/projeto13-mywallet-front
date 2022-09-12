@@ -19,8 +19,8 @@ function getBalance(getConfig) {
     return axios.get(`${URL}/home`, getConfig)
 }
 // Update-------------------------------
-function updateRegister(body, id, getConfig) {
-    return axios.put(`${URL}/updateRegister/${id}`, body, getConfig)
+function updateRegister(type, body, id, getConfig) {
+    return axios.put(`${URL}/updateRegister/${type}/${id}`, body, getConfig)
 }
 // Delete --------------------------------
 function deleteRegister(id, getConfig) {

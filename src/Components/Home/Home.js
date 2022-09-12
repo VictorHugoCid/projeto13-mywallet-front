@@ -11,7 +11,9 @@ export default function Home() {
 
     const navigate = useNavigate();
 
-    const { username, token, reRender, setReRender } = useContext(GlobalContext)
+    const { reRender } = useContext(GlobalContext)
+
+    const token = localStorage.getItem('token');
 
     const [balance, setBalance] = useState([])
 
@@ -20,9 +22,7 @@ export default function Home() {
         const promise = getBalance(getConfig(token))
         promise
             .catch((err) => {
-                // console.log(err.response.data)
                 alert(err.response.data)
-                // ajustar error
             })
             .then(res => {
                 setBalance(res.data)
@@ -40,20 +40,18 @@ export default function Home() {
         }
     }
 
-
-
-    // Não há registros de
-    // entrada ou saída
     return (
 
         <Wrapper>
 
             <HomeTitle>
-                <p>Olá, {username}</p>
+                <p>Olá, {localStorage.getItem('username')}</p>
                 <ion-icon
                     onClick={() => {
                         if (window.confirm('Tem certeza que deseja deslogar?')) {
                             logOut(getConfig(token))
+                            localStorage.removeItem('token')
+                            localStorage.removeItem('username')
                             setTimeout(() => {
                                 navigate('/')
                             }, 1000)

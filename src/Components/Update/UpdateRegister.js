@@ -5,15 +5,19 @@ import GlobalContext from "../../Context/globalContext";
 import { updateRegister } from "../../Services/api"
 import getConfig from '../../Services/getConfig'
 
-export default function Update_Outcome() {
+export default function UpdateRegister() {
 
     const navigate = useNavigate();
     const { token, reRender, setReRender } = useContext(GlobalContext);
-    const id = useParams()
+    const [disable, setDisable] = useState(false)
+    
+    const id = useParams().id
+    const type = useParams().type
 
     const [form, setForm] = useState({
         value: '',
         description: '',
+        type,
     });
 
     function handleForm(e) {
@@ -27,11 +31,17 @@ export default function Update_Outcome() {
     function sendForm(e) {
 
         e.preventDefault()
+        setDisable(!disable)
+        if (disable === true) {
+            return;
+        }
+
+
         const body = {
             value: Number(form.value),
             description: form.description,
         }
-        const promise = updateRegister(body, id.id, getConfig(token))
+        const promise = updateRegister(type, body, id, getConfig(token))
             .catch((error) => {
                 console.log(error.message);
                 // alert(error);
@@ -47,7 +57,13 @@ export default function Update_Outcome() {
     return (
 
         <Wrapper>
-            <HomeTitle>Editar saída</HomeTitle>
+            <HomeTitle>
+                {(type === 'income') ? (
+                     'Editar entrada' 
+                ) : (
+                     'Editar saída' 
+                )}
+            </HomeTitle>
             <FormWrapper onSubmit={sendForm}>
                 <InputValue
                     type='number'
@@ -64,7 +80,11 @@ export default function Update_Outcome() {
                     value={form.description}
                 />
                 <ConfirmButton type='submit'>
-                    Atualizar saída
+                {(type === 'income') ? (
+                     'Atualizar entrada' 
+                ) : (
+                     'Atualizar saída' 
+                )}
                 </ConfirmButton>
 
             </FormWrapper>
